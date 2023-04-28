@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="vr_array_vat.assets" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/vr_array_vat/static/src/js/models.js" />
+                <script type="text/javascript" src="/vr_array_vat/static/src/js/ClientDetailsEdit.js" />
+                <script type="text/javascript" src="/vr_array_vat/static/src/js/screens.js" />
+                <script type="text/javascript" src="/vr_array_vat/static/src/js/ProductScreen.js" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

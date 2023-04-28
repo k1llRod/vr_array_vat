@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('right-content')]" position="inside">
+            <div style="table tr:hover{background-color:gray;}">
+                <table class="client-list off_order_list" style="line-height: 25px; border:1px solid #CCC;
+                                                                margin:10px; width: 100%; text-align: justify;
+                                                                display: inline-table; font-size: medium;
+                                                                height: 35px;">
+                    <thead class="thead-dark" style="background-color: #43996E;
+                                                    color: white;">
+                        <tr>
+                            <th scope="col">NIT</th>
+                            <th scope="col">RAZÓN SOCIAL</th>
+                        </tr>
+                    </thead>
+                    <tbody class='off-order-list-contents' style="background-color: #e3e3e380;">
+                        <t t-foreach="partner_nit_razon().nit_razon_list" t-as="nit_a">
+                            <tr class='off-order-line line_hover' style="cursor:pointer; height: 35px;
+                                                                border: 1px solid #d9d9d9;
+                                                                hover {background-color: white;}">
+                                <td>
+                                    <span t-esc="nit_a.nit"/>
+                                </td>
+                                <td>
+                                    <span t-esc="nit_a.razon_social"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+            </div>
+        </xpath>
+        <xpath expr="//span[hasclass('js_customer_name')]" position="after">
+            <div>
+                <ul>
+                    <li>
+                        <span id="list_rz"><t t-esc="env.pos.get_client().razon_social" /></span>
+                    </li>
+                    <li>
+                        <span id="list_nit"><t t-esc="env.pos.get_client().vat" /></span>
+                    </li>
+                </ul>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('right-content')]" position="inside">
+            <div style="display: block;
+                        text-align: center;">
+                NIT:
+                <input class='nit_ci_input' name='nit_ci' t-att-value="env.pos.get_client().nit_ci"></input>
+                RAZON SOCIAL:
+                <input class='razon_social_input' name='razon_social'
+                       t-att-value="env.pos.get_client().razon_social"></input>
+            </div>
+        </xpath>
+    </t>
+</templates>

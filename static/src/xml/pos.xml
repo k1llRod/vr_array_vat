@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ClientDetailsEdit" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+
+        <xpath expr="//div[hasclass('client-picture')]" position="before">
+            <div class='client-details-left'>
+                <div class='client-detail'>
+                    <span class='label'>NIT/CI</span>
+                    <input class='detail client-name-nit_ci' name='nit_ci' t-att-value='props.partner.nit_ci'
+                           placeholder='' t-on-change="captureChange"></input>
+                </div>
+            </div>
+            <div class='client-details-right'>
+                <div class='client-detail'>
+                    <span class='label'>Razón Social</span>
+                    <input class='detail client-name-razon_social' name='razon_social'
+                           t-att-value='props.partner.razon_social'
+                           placeholder='' t-on-change="captureChange"></input>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('client-details-box')]" position="after">
+            <div class='client-details-center'>
+                <div class='client-detail'>
+                    <table class="client-list" style="line-height: 10px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">NIT</th>
+                                <th scope="col">RAZÓN SOCIAL</th>
+                            </tr>
+                          </thead>
+                        <tbody>
+                            <t t-foreach="partner_nit_razon().nit_razon_list" t-as="nit_a">
+                                <tr>
+                                    <td>
+                                        <span t-esc="nit_a.nit"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="nit_a.razon"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <!--<div class='client-detail'>
+                    <table class="client-list" style="line-height: 10px;">
+                        <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">RAZÓN SOCIAL Registrados</th>
+                            </tr>
+                          </thead>
+                        <tbody>
+                            <t t-foreach="partner_razon().razon_list" t-as="razon_a">
+                                <tr>
+                                    <td>
+                                        <span t-esc="razon_a.razon"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>-->
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="ClientListScreen" t-inherit="point_of_sale.ClientListScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//table[hasclass('client-list')]/thead/tr" position="inside">
+            <th id="client-list-nit_ci">NIT/CI</th>
+            <th id="client-list-razon_social">Razón Social</th>
+        </xpath>
+    </t>
+
+    <!--<t t-extend="ClientLine">-->
+    <t t-name="ClientLine" t-inherit="point_of_sale.ClientLine" t-inherit-mode="extension" owl="1">
+        <xpath expr="//tr" position="inside">
+            <td>
+                <t t-if='props.partner.nit_ci'>
+                    <t t-esc='props.partner.nit_ci'/>
+                </t>
+                <t t-if='!props.partner.nit_ci'>
+                    0
+                </t>
+            </td>
+            <td>
+                <t t-if='props.partner.razon_social'>
+                    <t t-esc='props.partner.razon_social'/>
+                </t>
+                <t t-if='!props.partner.razon_social'>
+                    S/N
+                </t>
+            </td>
+        </xpath>
+    </t>
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//img[hasclass('pos-receipt-logo')]" position="replace">
+            <span></span>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="replace">
+            <div class="pos-receipt-contact">
+                <div style='text-align:center; font-size: 12px; line-height: 13px;'>
+                <strong><t t-esc="env.pos.company.razon_social"/></strong>
+                    <br/>
+                    <strong><t t-esc="receipt.pos_dosif.sucursal"/></strong>
+                    <br/>
+                    <t t-esc="receipt.pos_dosif.street"/>
+                    <br/>
+                    Teléfono:
+                    <t t-esc="receipt.pos_dosif.phone || ''"/>
+                    <br/>
+                    <t t-esc="receipt.pos_dosif.city || ''"/>-Bolivia
+                    <p style="margin-top:3px; margin-bottom:3px;"><strong>FACTURA</strong></p>
+                    <br/>
+                </div>
+                <div style="border-bottom: 1px solid black;"></div>
+                <div class="text-left"
+
+                     style="margin-left:20px; font-size: 12px; text-align: left;">
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr style="line-height: 14px;">
+                                <td scope="row">
+                                    <strong>NIT:</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="env.pos.company.nit_ci"/>
+                                </td>
+                            </tr>
+                            <tr style="line-height: 14px;">
+                                <td scope="row">
+                                    <strong>N° de Factura:</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="receipt.n_factura"/>
+                                </td>
+                            </tr>
+                            <tr style="line-height: 14px;">
+                                <td scope="row">
+                                    <strong>N° Autorización:</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="receipt.pos_dosif.n_autorizacion"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="border-bottom: 1px solid black;"></div>
+                <div class="text-center" style="font-size: 14px; line-height: 14px;text-align: center;">
+                    <t t-esc="receipt.pos_dosif.actividad[1]"/>
+                </div>
+                <div style="border-bottom: 1px solid black;"></div>
+                <div class="text-left" style="margin-left:20px; font-size: 12px; text-align: left;">
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr style="line-height: 14px;">
+                                <td scope="row">
+                                    <strong>Fecha Hora:</strong></td>
+                                <td>
+                                <t t-esc="receipt.date.localestring"/></td></tr>
+                            <tr style="line-height: 14px;">
+                                <td scope="row">
+                                    <strong>Señor(es):</strong></td>
+                                <td>
+                            <t t-esc="receipt.razon_social"/></td></tr>
+                            <tr style="line-height: 14px;">
+                                <td scope="row">
+                                    <strong>NIT/CI:</strong></td>
+                                <td>
+                                <t t-esc="receipt.nit_ci"/></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('orderlines')]" position="replace">
+            <div class="orderlines" style="font-size: 12px; text-align: left; margin-top:-30px;">
+                <table class='receipt-orderlines'>
+                    <tr>
+                        <td class="pos-center-align" width='14%'>
+                            CANT.
+                        </td>
+                        <td class="pos-left-align" width='38%'>
+                            DETALLE
+                        </td>
+                        <td class="pos-center-align" width='18%'>
+                            P. UNIT.
+                        </td>
+                        <td class="pos-center-align" width='20%'>
+                            SUB TOTAL
+                        </td>
+                    </tr>
+                    <tr t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                        <td class="pos-center-align">
+                            <t t-esc="Math.round(line.quantity * Math.pow(10, env.pos.dp['Product Unit of Measure'])) / Math.pow(10, env.pos.dp['Product Unit of Measure'])"/>
+                            <t t-if="line.unit_name !== 'Units'" t-esc="line.unit_name"/>
+                        </td>
+                        <td>
+                            <t t-esc="line.product_name_wrapped[0]"/>
+                            <t t-if="line.discount !== 0">
+                                <div class="pos-receipt-left-padding">
+                                    Descuento: <t t-esc="line.discount"/>%
+                                </div>
+                            </t>
+                        </td>
+                        <td class="pos-center-align">
+                            <t t-esc="env.pos.format_currency_no_symbol(line.price_display_one)"/>
+
+                        </td>
+                        <td class="pos-center-align">
+                            <span class="price_display pos-receipt-right-align">
+                                <t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-right-align')]" position="replace">
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-amount')]" position="replace">
+        </xpath>
+        <xpath expr="//t[@t-if='receipt.total_discount']" position="replace">
+        </xpath>
+        <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace">
+        </xpath>
+        <xpath expr="//t[@t-if='isTaxIncluded']" position="replace">
+        </xpath>
+        <xpath expr="//div[hasclass('receipt-change')]" position="replace">
+            <div style="font-size: 12px; margin-top:-45px;">
+            <div style="border-bottom: 1px solid black;"></div>
+                <div>Subtotal<span t-esc="env.pos.format_currency(receipt.subtotal_change)"
+                                   class="pos-receipt-right-align"/></div>
+                <div>
+                Descuento
+                <span t-esc="env.pos.format_currency(receipt.total_discount)" class="pos-receipt-right-align"/>
+            </div>
+                <div>
+                TOTAL
+                <span t-esc="env.pos.format_currency(receipt.total_with_tax)" class="pos-receipt-right-align"/>
+            </div>
+                <t t-if="receipt.total_rounded != receipt.total_with_tax">
+                <div class="pos-receipt-amount">
+                    ROUNDED
+                    <span t-esc="env.pos.format_currency(receipt.total_rounded)" class="pos-receipt-right-align"/>
+                </div>
+            </t>
+                <div style="border-bottom: 1px solid black;"></div>
+                <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">
+                <div>
+                    <t t-esc="line.name"/>
+                    <span t-esc="env.pos.format_currency_no_symbol(line.amount)" class="pos-receipt-right-align"/>
+                </div>
+            </t>
+                <strong>Cambio</strong>
+                <span t-esc="env.pos.format_currency(receipt.change)" class="pos-receipt-right-align"/>
+                <br/>
+                <strong>SON:</strong>
+                <t t-esc="receipt.literal_amount"/>
+                <div style="border-bottom: 1px solid black;"></div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-center-align')]" position="after">
+            <table class='receipt-change'>
+                <tr>
+                    <td scope="row">Código de Control:</td>
+                    <td class="pos-right-align">
+                        <t t-esc="receipt.codigo_control"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="row">Fecha Límite de Emisión:</td>
+                    <td class="pos-right-align">
+                        <t t-esc="receipt.pos_dosif.date_end"/>
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align:center">
+                <div class="qrcode" id="qrcode" style="display: flex; justify-content: center;"></div>
+            </div>
+            <script type="text/javascript">
+                    var qr_string = "<t t-esc="receipt.qr_string"/>";
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                width: 120,
+                height: 120,
+                correctLevel: QRCode.CorrectLevel.Q
+                });
+                qrcode.makeCode(qr_string);
+                </script>
+            <div style="text-align:center">
+                    <strong>ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS. EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY</strong>
+                <br/>
+                <t t-esc="receipt.pos_dosif.leyenda[1]"/>
+                </div>
+        </xpath>
+    </t>
+</templates>

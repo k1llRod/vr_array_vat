@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="vr_array_vat.list">
+      <field name="name">vr_array_vat list</field>
+      <field name="model">vr_array_vat.vr_array_vat</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="vr_array_vat.action_window">
+      <field name="name">vr_array_vat window</field>
+      <field name="res_model">vr_array_vat.vr_array_vat</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="vr_array_vat.action_server">
+      <field name="name">vr_array_vat server</field>
+      <field name="model_id" ref="model_vr_array_vat_vr_array_vat"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="vr_array_vat" id="vr_array_vat.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="vr_array_vat.menu_1" parent="vr_array_vat.menu_root"/>
+    <menuitem name="Menu 2" id="vr_array_vat.menu_2" parent="vr_array_vat.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="vr_array_vat.menu_1_list" parent="vr_array_vat.menu_1"
+              action="vr_array_vat.action_window"/>
+    <menuitem name="Server to list" id="vr_array_vat" parent="vr_array_vat.menu_2"
+              action="vr_array_vat.action_server"/>
+-->
+  </data>
+</odoo>

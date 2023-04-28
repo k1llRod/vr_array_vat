@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ClientDetailsEdit" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('client-details-box')]" position="after">
+            <div>
+                <h1>TEST</h1>
+                <table>
+                    <tr>
+                        <td><span class="label">Razon social:</span></td>
+<!--                        <td><input class='nit_ci_input' name='razon_social' ></input></td>-->
+                        <td><span class="label">Nit</span></td>
+<!--                        <input class='nit_ci_input' name='nit' ></input>-->
+                    </tr>
+
+                </table>
+            </div>
+            <div>
+                <table class="client-list off_order_list"
+                       style="line-height: 15px; border:1px solid #CCC; margin:10px;">
+                    <thead class="thead-dark" >
+                        <tr>
+                          <th scope="col">NIT</th>
+                            <th scope="col">RAZÓN SOCIAL</th>
+                        </tr>
+                    </thead>
+                        <tbody class='off-order-list-contents'>
+                            <t t-foreach="partner_nit_razon().nit_razon_list" t-as="nit_a">
+                                <tr class='off-order-line fila_hover' style="cursor:pointer;">
+                                    <td>
+                                        <span t-esc="nit_a.nit"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="nit_a.razon_social"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                </table>
+            </div>
+        </xpath>
+
+    </t>
+</templates>

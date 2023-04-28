@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="rz_nit_lines">
+            <field name="name">rz.nit.lines.tree</field>
+            <field name="model">rz.nit.lines</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="partner_id"/>
+                    <field name="razon_social"/>
+                    <field name="nit"/>
+                </tree>
+            </field>
+        </record>
+        <record id="rz_nit_lines_action" model="ir.actions.act_window">
+            <field name="name">Nit y razon social</field>
+            <field name="res_model">rz.nit.lines</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
